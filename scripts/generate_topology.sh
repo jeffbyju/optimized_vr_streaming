@@ -26,7 +26,11 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 echo "Generating topology with:"
-echo "- $CLIENTS Client nodes"
-echo "- $CDNS CDN nodes"
+echo "- $CLIENTS Client node(s)"
+echo "- $CDNS CDN node(s)"
+
+# create directory structure in accordance with specified params:
+
+
 
 exit 1
