@@ -5,8 +5,8 @@
 
 # input validation
 if [[ "$#" -ne 2 || -z "$1" || -z "$2" ]]; then
-  echo "Usage: $0 <hostname> <ssh-key-path>"
-  exit 1
+    echo "Usage: $0 <hostname> <ssh-key-path>"
+    exit 1
 fi
 
 HOSTNAME=$1
@@ -16,9 +16,9 @@ SSH_KEY=$2
 echo "Setting up $HOSTNAME..."
 
 ssh -t -i "$SSH_KEY" ymangel2@"$HOSTNAME" << 'EOF'
-  set -e
-  echo "Running remote setup on $(hostname)"
-  sudo add-apt-repository ppa:katharaframework/kathara
-  sudo DEBIAN_FRONTEND=noninteractive apt update && sudo DEBIAN_FRONTEND=noninteractive apt install -y wireshark && sudo apt install -y git kathara
-  git clone https://github.com/jeffbyju/optimized_vr_streaming.git
+    set -e
+    echo "Running remote setup on $(hostname)"
+    sudo add-apt-repository ppa:katharaframework/kathara
+    sudo DEBIAN_FRONTEND=noninteractive apt update && sudo DEBIAN_FRONTEND=noninteractive apt install -y wireshark && sudo apt install -y git kathara
+    git clone https://github.com/jeffbyju/optimized_vr_streaming.git
 EOF
