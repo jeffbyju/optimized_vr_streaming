@@ -43,7 +43,6 @@ mkdir -p "$LAB_DIR"
 touch "$CONF_FILE"
 
 if [[ $CDNS -gt 0 ]]; then 
-    mkdir -p "$LAB_DIR/cdn"
 
     echo "# CDN Mesh (M):" > "$CONF_FILE"    
     echo >> "$CONF_FILE"
@@ -55,14 +54,14 @@ if [[ $CDNS -gt 0 ]]; then
         if [[ $i -lt $CDNS ]]; then 
             echo >> "$CONF_FILE"
         fi
+
+        touch "$LAB_DIR/cdn$i.startup"
     done
 fi
 
 if [[ $CLIENTS -gt 0 ]]; then 
 
     echo >> "$CONF_FILE"
-
-	mkdir -p "$LAB_DIR/client"
 
     echo "# Clients:" >> "$CONF_FILE"
     echo >> "$CONF_FILE"
@@ -71,12 +70,20 @@ if [[ $CLIENTS -gt 0 ]]; then
         echo "client$i[0]=C$i" >> "$CONF_FILE"
         echo "client$i[exec]=client" >> "$CONF_FILE"
         # echo "client$i[image]=
-        if [[ $CDNS -gt 0 ]]; then 
-            echo "cdn$(( RANDOM % CDNS + 1 ))[1]=C$i" >> "$CONF_FILE" # connect each client to random CDN 
+        if [[ $CDNS -gt 0 ]]; then
+            rand_idx=$((RANDOM % CDNS + 1))
+            if_idx=1  
+            while grep -q "cdn$rand_idx\[$if_idx\]" "$CONF_FILE"; do
+                ((if_idx++))
+            done
+            echo "cdn$rand_idx[$if_idx]=C$i" >> "$CONF_FILE" # connect each client to random CDN 
         fi
+
         if [[ $i -lt $CLIENTS ]]; then 
             echo >> "$CONF_FILE"
         fi
+
+        touch "$LAB_DIR/client$i.startup"
     done
 fi
 
