@@ -1,0 +1,11 @@
+Infra things to work on: 
+
+1. Dockerfile for each node type (client, cdn, etc.) to accomplish the following: 
+    - Install dependencies to be able to run UDT 
+    - Copy + compile UDT code from source
+2. Get some sort of Wireshark/tcpdump working on a centralized source (either cloudlab VM or host machine)
+    - See https://github.com/KatharaFramework/Kathara-Labs/tree/main/tutorials/capture-packets
+3. Get visual graph (for throughput measurement) working on same centralized server 
+4. Write automatic scripts/tests to collect performance data of BASELINE UDT
+
+After this, focus shifts to UDT protocol improvement
